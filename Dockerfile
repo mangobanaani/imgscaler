@@ -14,10 +14,15 @@ WORKDIR /app
 # Install poetry
 RUN pip install --no-cache-dir poetry==1.8.3
 
+# Copy dependency files and install Python dependencies
 COPY pyproject.toml poetry.lock* ./
 RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi --only main
 
+# Copy backend application
 COPY app ./app
+
+# Copy frontend files
+COPY frontend ./frontend
 
 EXPOSE 8000
 
